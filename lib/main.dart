@@ -1,5 +1,7 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:verifyphone/Providers/verification_code_provider.dart';
 import 'package:verifyphone/Screens/home_page.dart';
 import 'package:verifyphone/Screens/user_location_page.dart';
 import 'package:verifyphone/Screens/verification_page.dart';
@@ -11,6 +13,10 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseAppCheck.instance.activate(
+    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+  );
+
   runApp(const MyApp());
 }
 
@@ -20,7 +26,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [],
+      providers: [
+        ChangeNotifierProvider(create: (context) => VerificationCodeProvider())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Firebase Phone Verification',

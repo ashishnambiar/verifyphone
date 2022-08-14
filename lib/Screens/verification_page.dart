@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:verifyphone/CustomWidgets/custom_textfield.dart';
+import 'package:verifyphone/Providers/verification_code_provider.dart';
 import 'package:verifyphone/Screens/user_location_page.dart';
 
 class VerificationPage extends StatelessWidget {
@@ -10,6 +12,8 @@ class VerificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final codeProvider =
+        Provider.of<VerificationCodeProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Enter Verification Code'),
@@ -20,19 +24,26 @@ class VerificationPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CustomTextField(
+              CustomTextFormField(
+                digitsOnly: true,
+                maxLength: 6,
                 label: 'Verification Code',
                 controller: codeController,
                 isPassword: false,
               ),
               const SizedBox(height: 25),
-              ElevatedButton(
-                onPressed: () {
-                  //TODO: verifyCode sent to user
-                  Navigator.pushNamed(context, UserLocationPage.route);
-                },
-                child: Text('Submit'),
-              ),
+              Consumer<VerificationCodeProvider>(
+                  builder: (context, provider, child) {
+                return provider.loading
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () {
+                          codeProvider
+                              .signInWithVerificationCode(codeController.text);
+                        },
+                        child: Text('Submit'),
+                      );
+              }),
             ],
           ),
         ),

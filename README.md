@@ -1,16 +1,9 @@
 # verifyphone
 
-A new Flutter project.
+This Flutter Project is made using:
+- Provider
+- Firebase Auth
+- Google Maps Flutter
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This is Flutter App will verify the user's phone number.
+Once verified, The user will be sent to Google Maps screen showing their current location.
